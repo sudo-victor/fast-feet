@@ -4,16 +4,19 @@ import { Document } from '../../enterprise/entities/object-values/document';
 import { DelivererRepository } from '../repositories/deliverer-repository';
 import { HashGenerator } from '../cryptography/hash-generator';
 import { ResourceAlreadyExistsError } from '@/core/errors/resource-already-exists-error';
+import { NotAllowedError } from '@/core/errors/not-allowed-error';
+import { AdminRepository } from '../repositories/admin-repository';
 
 interface RegisterDelivererRequest {
   name: string;
   email: string;
   password: string;
   document: string;
+  actorId: string;
 }
 
 type RegisterDelivererResponse = Either<
-  ResourceAlreadyExistsError,
+  ResourceAlreadyExistsError | NotAllowedError,
   {
     deliverer: Deliverer;
   }
@@ -22,6 +25,7 @@ type RegisterDelivererResponse = Either<
 export class RegisterDeliverer {
   constructor(
     private delivererRepository: DelivererRepository,
+    private adminRepository: AdminRepository,
     private hashGenerator: HashGenerator,
   ) {}
 
@@ -30,7 +34,14 @@ export class RegisterDeliverer {
     email,
     password,
     document,
+    actorId,
   }: RegisterDelivererRequest): Promise<RegisterDelivererResponse> {
+    const admin = await this.adminRepository.findById(actorId);
+
+    if (!admin) {
+      return left(new NotAllowedError());
+    }
+
     const delivererAlreadyExists =
       await this.delivererRepository.findByDocument(document);
 
