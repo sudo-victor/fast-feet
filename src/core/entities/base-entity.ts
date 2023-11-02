@@ -2,7 +2,7 @@ import { UniqueEntityId } from './unique-entity-id';
 
 export class BaseEntity<Props> {
   private _id: UniqueEntityId;
-  private props: Props;
+  protected props: Props;
 
   get id() {
     return this._id;
