@@ -1,8 +1,9 @@
 import { Optional } from '@/@types/optional';
 import { UniqueEntityId } from '@/core/entities/unique-entity-id';
 import { BaseEntity } from 'src/core/entities/base-entity';
+import { Document } from './object-values/document';
 
-export interface DelivererProps {
+export interface AdminProps {
   name: string;
   email: string;
   password: string;
@@ -11,7 +12,7 @@ export interface DelivererProps {
   updatedAt?: Date | null;
 }
 
-export class Deliverer extends BaseEntity<DelivererProps> {
+export class Admin extends BaseEntity<AdminProps> {
   get name() {
     return this.props.name;
   }
@@ -53,10 +54,10 @@ export class Deliverer extends BaseEntity<DelivererProps> {
   }
 
   static create(
-    props: Optional<DelivererProps, 'createdAt' | 'updatedAt'>,
+    props: Optional<AdminProps, 'createdAt' | 'updatedAt'>,
     id?: UniqueEntityId,
   ) {
-    const deliverer = new Deliverer(
+    const admin = new Admin(
       {
         ...props,
         createdAt: props.createdAt ?? new Date(),
@@ -64,6 +65,6 @@ export class Deliverer extends BaseEntity<DelivererProps> {
       id,
     );
 
-    return deliverer;
+    return admin;
   }
 }
