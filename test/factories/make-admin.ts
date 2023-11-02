@@ -12,7 +12,7 @@ export const makeAdmin = (
       name: faker.person.fullName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
-      document: override.document ?? Document.createCPF('321.123.137-00'),
+      document: override.document ?? Document.createCPF('182.028.137-00'),
       ...override,
     },
     id,

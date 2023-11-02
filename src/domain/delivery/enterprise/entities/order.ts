@@ -1,22 +1,21 @@
 import { Optional } from '@/@types/optional';
 import { UniqueEntityId } from '@/core/entities/unique-entity-id';
-import { BaseEntity } from 'src/core/entities/base-entity';
 import { Status } from './status';
+import { AggregateRoot } from '@/core/entities/base-aggregate-root';
 
-export interface PackageProps {
+export interface OrderProps {
   name: string;
   status: Status[];
-  recipientId: UniqueEntityId;
   createdAt: Date;
-  updatedAt: Date;
+  updatedAt?: Date | null;
 }
 
-export class Package extends BaseEntity<PackageProps> {
+export class Order extends AggregateRoot<OrderProps> {
   static create(
-    props: Optional<PackageProps, 'createdAt' | 'updatedAt'>,
+    props: Optional<OrderProps, 'createdAt' | 'updatedAt'>,
     id?: UniqueEntityId,
   ) {
-    const package = new Package(
+    const order = new Order(
       {
         ...props,
         createdAt: props.createdAt ?? new Date(),
@@ -24,6 +23,6 @@ export class Package extends BaseEntity<PackageProps> {
       id,
     );
 
-    return package;
+    return order;
   }
 }
