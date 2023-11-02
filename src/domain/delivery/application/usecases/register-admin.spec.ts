@@ -4,6 +4,7 @@ import { faker } from '@faker-js/faker';
 import { FakeHasher } from 'test/cryptography/fake-hasher';
 import { makeAdmin } from 'test/factories/make-admin';
 import { Document } from '../../enterprise/entities/object-values/document';
+import { ResourceAlreadyExistsError } from '@/core/errors/resource-already-exists-error';
 
 let inMemoryAdminRepository: InMemoryAdminRepository;
 let fakeHasher: FakeHasher;
@@ -46,5 +47,6 @@ describe('Register admin', () => {
 
     expect(result.isLeft()).toEqual(true);
     expect(inMemoryAdminRepository.items).toHaveLength(1);
+    expect(result.value).toBeInstanceOf(ResourceAlreadyExistsError);
   });
 });

@@ -1,36 +1,21 @@
+import { ValueObject } from '@/core/entities/base-value-object';
 import { CpfUtil } from '../../utils/cpf-util';
 
 export interface DocumentValueProps {
-  data: string;
+  value: string;
   type: 'CPF';
 }
 
-export class Document {
+export class Document extends ValueObject<DocumentValueProps> {
   private value: DocumentValueProps;
 
-  constructor(document: DocumentValueProps) {
-    this.value = document;
-  }
-
-  toValue() {
-    return this.value;
-  }
-
-  toString() {
-    return CpfUtil.addDotsIn(this.value.data);
-  }
-
-  equals(value: string) {
-    return CpfUtil.removeSymbolsFrom(value) === this.value.data;
-  }
-
   static createCPF(value: string) {
-    if (CpfUtil.isValid(value)) {
+    if (!CpfUtil.isValid(value)) {
       throw new Error('Invalid CPF');
     }
 
     return new Document({
-      data: CpfUtil.removeSymbolsFrom(value),
+      value: CpfUtil.removeSymbolsFrom(value),
       type: 'CPF',
     });
   }

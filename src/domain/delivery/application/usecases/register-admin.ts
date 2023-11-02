@@ -2,8 +2,8 @@ import { Either, left, right } from '@/core/errors/either';
 import { Admin } from '../../enterprise/entities/admin';
 import { Document } from '../../enterprise/entities/object-values/document';
 import { AdminRepository } from '../repositories/admin-repository';
-import { ResourceAlreadyExistsError } from './errors/resource-already-exists-error';
 import { HashGenerator } from '../cryptography/hash-generator';
+import { ResourceAlreadyExistsError } from '@/core/errors/resource-already-exists-error';
 
 interface RegisterAdminRequest {
   name: string;

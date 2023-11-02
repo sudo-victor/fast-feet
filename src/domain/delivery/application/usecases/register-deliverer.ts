@@ -2,8 +2,8 @@ import { Either, left, right } from '@/core/errors/either';
 import { Deliverer } from '../../enterprise/entities/deliverer';
 import { Document } from '../../enterprise/entities/object-values/document';
 import { DelivererRepository } from '../repositories/deliverer-repository';
-import { ResourceAlreadyExistsError } from './errors/resource-already-exists-error';
 import { HashGenerator } from '../cryptography/hash-generator';
+import { ResourceAlreadyExistsError } from '@/core/errors/resource-already-exists-error';
 
 interface RegisterDelivererRequest {
   name: string;

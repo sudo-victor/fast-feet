@@ -2,9 +2,9 @@ import { InMemoryDelivererRepository } from 'test/repositories/in-memory-deliver
 import { RegisterDeliverer } from './register-deliverer';
 import { faker } from '@faker-js/faker';
 import { FakeHasher } from 'test/cryptography/fake-hasher';
-import { Deliverer } from '../../enterprise/entities/deliverer';
 import { makeDeliverer } from 'test/factories/make-deliverer';
 import { Document } from '../../enterprise/entities/object-values/document';
+import { ResourceAlreadyExistsError } from '@/core/errors/resource-already-exists-error';
 
 let inMemoryDelivererRepository: InMemoryDelivererRepository;
 let fakeHasher: FakeHasher;
@@ -47,5 +47,6 @@ describe('Register deliverer', () => {
 
     expect(result.isLeft()).toEqual(true);
     expect(inMemoryDelivererRepository.items).toHaveLength(1);
+    expect(result.value).toBeInstanceOf(ResourceAlreadyExistsError);
   });
 });
