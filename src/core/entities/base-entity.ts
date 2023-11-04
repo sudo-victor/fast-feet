@@ -24,4 +24,21 @@ export abstract class BaseEntity<Props> {
 
     return false;
   }
+
+  merge<Entity>(source: Partial<Props>) {
+    const target = { ...this.props };
+
+    for (const key in source) {
+      if (source.hasOwnProperty(key) && source[key]) {
+        target[key] = source[key];
+      }
+    }
+
+    const mergedEntity = new (this.constructor as new (
+      props: Props,
+      id?: UniqueEntityId,
+    ) => Entity)(target, this._id);
+
+    return mergedEntity;
+  }
 }

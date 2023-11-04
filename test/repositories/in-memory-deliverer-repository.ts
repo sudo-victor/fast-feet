@@ -1,4 +1,5 @@
 import { UniqueEntityId } from '@/core/entities/unique-entity-id';
+import { PaginationParams } from '@/core/repositories/pagination-params';
 import { DelivererRepository } from '@/domain/delivery/application/repositories/deliverer-repository';
 import { Deliverer } from '@/domain/delivery/enterprise/entities/deliverer';
 import { Document } from '@/domain/delivery/enterprise/entities/object-values/document';
@@ -8,6 +9,11 @@ export class InMemoryDelivererRepository implements DelivererRepository {
 
   async create(deliverer: Deliverer): Promise<void> {
     this.items.push(deliverer);
+  }
+
+  async save(deliverer: Deliverer): Promise<void> {
+    const target = this.items.find((item) => item.id.equals(deliverer.id));
+    Object.assign(target, deliverer);
   }
 
   async findByDocument(document: string): Promise<Deliverer> {
@@ -32,5 +38,9 @@ export class InMemoryDelivererRepository implements DelivererRepository {
     }
 
     return deliverer;
+  }
+
+  async findAll({ page }: PaginationParams): Promise<Deliverer[]> {
+    return this.items.slice(page - 1, page * 20);
   }
 }
