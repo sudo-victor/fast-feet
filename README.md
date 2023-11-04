@@ -4,9 +4,9 @@
 
 [x] - Deve ser possível realizar login com CPF e Senha
 
-[ ] - Deve ser possível realizar o CRUD dos entregadores
+[x] - Deve ser possível realizar o CRUD dos entregadores
 
-[ ] - Deve ser possível realizar o CRUD das encomendas
+[x] - Deve ser possível realizar o CRUD das encomendas
 
 [ ] - Deve ser possível realizar o CRUD dos destinatários
 

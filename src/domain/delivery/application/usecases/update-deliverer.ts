@@ -10,7 +10,8 @@ import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 
 interface UpdateDelivererRequest {
   id: string;
-  source: Partial<DelivererProps> & { actorId: string };
+  actorId: string;
+  source: Omit<Partial<DelivererProps>, 'createdAt' | 'updatedAt'>;
 }
 
 type UpdateDelivererResponse = Either<
@@ -29,7 +30,8 @@ export class UpdateDeliverer {
 
   async execute({
     id,
-    source: { name, email, password, document, actorId },
+    actorId,
+    source: { name, email, password, document },
   }: UpdateDelivererRequest): Promise<UpdateDelivererResponse> {
     const admin = await this.adminRepository.findById(actorId);
 

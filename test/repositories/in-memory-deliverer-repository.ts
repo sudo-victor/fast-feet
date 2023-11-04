@@ -16,6 +16,18 @@ export class InMemoryDelivererRepository implements DelivererRepository {
     Object.assign(target, deliverer);
   }
 
+  async delete(id: string): Promise<void> {
+    const delivererIndex = this.items.findIndex((item) =>
+      item.id.equals(new UniqueEntityId(id)),
+    );
+
+    if (delivererIndex < 0) {
+      return;
+    }
+
+    this.items.splice(delivererIndex, 1);
+  }
+
   async findByDocument(document: string): Promise<Deliverer> {
     const deliverer = this.items.find((item) =>
       item.document.equals(Document.createCPF(document)),
