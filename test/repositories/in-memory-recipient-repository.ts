@@ -10,6 +10,11 @@ export class InMemoryRecipientRepository implements RecipientRepository {
     this.items.push(recipient);
   }
 
+  async save(recipient: Recipient): Promise<void> {
+    const target = this.items.find((item) => item.id.equals(recipient.id));
+    Object.assign(target, recipient);
+  }
+
   async findAll({ page }: PaginationParams): Promise<Recipient[]> {
     return this.items.slice(page - 1, page * 20);
   }

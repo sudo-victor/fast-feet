@@ -2,8 +2,14 @@ import { Optional } from '@/@types/optional';
 import { UniqueEntityId } from '@/core/entities/unique-entity-id';
 import { BaseEntity } from 'src/core/entities/base-entity';
 
+export type StatusSituationOptions =
+  | 'pending'
+  | 'collected'
+  | 'delivered'
+  | 'returned';
+
 export interface StatusProps {
-  situation: 'pending' | 'collected' | 'delivered';
+  situation: StatusSituationOptions;
   createdAt: Date;
 }
 

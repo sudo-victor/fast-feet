@@ -8,15 +8,15 @@
 
 [x] - Deve ser possível realizar o CRUD das encomendas
 
-[ ] - Deve ser possível realizar o CRUD dos destinatários
+[x] - Deve ser possível realizar o CRUD dos destinatários
 
-[ ] - Deve ser possível marcar uma encomenda como aguardando (Disponível para retirada)
+[x] - Deve ser possível marcar uma encomenda como aguardando (Disponível para retirada)
 
-[ ] - Deve ser possível retirar uma encomenda
+[x] - Deve ser possível retirar uma encomenda
 
-[ ] - Deve ser possível marcar uma encomenda como entregue
+[x] - Deve ser possível marcar uma encomenda como entregue
 
-[ ] - Deve ser possível marcar uma encomenda como devolvida
+[x] - Deve ser possível marcar uma encomenda como devolvida
 
 [ ] - Deve ser possível listar as encomendas com endereços de entrega próximo ao local do entregador
 
@@ -29,11 +29,11 @@
 ### Regras de negócio
 
 
-[ ] - Somente usuário do tipo admin pode realizar operações de CRUD nas encomendas
+[x] - Somente usuário do tipo admin pode realizar operações de CRUD nas encomendas
 
-[ ] - Somente usuário do tipo admin pode realizar operações de CRUD dos entregadores
+[x] - Somente usuário do tipo admin pode realizar operações de CRUD dos entregadores
 
-[ ] - Somente usuário do tipo admin pode realizar operações de CRUD dos destinatários
+[x] - Somente usuário do tipo admin pode realizar operações de CRUD dos destinatários
 
 [ ] - Para marcar uma encomenda como entregue é obrigatório o envio de uma foto
 
