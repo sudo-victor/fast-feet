@@ -1,5 +1,5 @@
 import { Either, left, right } from '@/core/errors/either';
-import { Deliverer, DelivererProps } from '../../enterprise/entities/deliverer';
+import { Deliverer } from '../../enterprise/entities/deliverer';
 import { Document } from '../../enterprise/entities/object-values/document';
 import { DelivererRepository } from '../repositories/deliverer-repository';
 import { HashGenerator } from '../cryptography/hash-generator';
@@ -8,20 +8,20 @@ import { NotAllowedError } from '@/core/errors/not-allowed-error';
 import { AdminRepository } from '../repositories/admin-repository';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 
-interface UpdateDelivererRequest {
-  id: string;
+interface UpdateDelivererPasswordRequest {
+  delivererId: string;
   actorId: string;
-  source: Omit<Partial<DelivererProps>, 'createdAt' | 'updatedAt' | 'password'>;
+  password: string;
 }
 
-type UpdateDelivererResponse = Either<
+type UpdateDelivererPasswordResponse = Either<
   ResourceAlreadyExistsError | NotAllowedError,
   {
     deliverer: Deliverer;
   }
 >;
 
-export class UpdateDeliverer {
+export class UpdateDelivererPassword {
   constructor(
     private delivererRepository: DelivererRepository,
     private adminRepository: AdminRepository,
@@ -29,33 +29,28 @@ export class UpdateDeliverer {
   ) {}
 
   async execute({
-    id,
+    delivererId,
     actorId,
-    source: { name, email, document },
-  }: UpdateDelivererRequest): Promise<UpdateDelivererResponse> {
+    password,
+  }: UpdateDelivererPasswordRequest): Promise<UpdateDelivererPasswordResponse> {
     const admin = await this.adminRepository.findById(actorId);
 
     if (!admin) {
       return left(new NotAllowedError());
     }
 
-    const deliverer = await this.delivererRepository.findById(id);
+    const deliverer = await this.delivererRepository.findById(delivererId);
 
     if (!deliverer) {
       return left(new ResourceNotFoundError());
     }
 
-    const delivererMerged = deliverer.merge<Deliverer>({
-      name,
-      email,
-      document:
-        typeof document === 'string' ? Document.createCPF(document) : undefined,
-    });
+    deliverer.password = await this.hashGenerator.hash(password);
 
-    await this.delivererRepository.save(delivererMerged);
+    await this.delivererRepository.save(deliverer);
 
     return right({
-      deliverer: delivererMerged,
+      deliverer,
     });
   }
 }

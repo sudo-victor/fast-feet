@@ -3,7 +3,7 @@ import { HashGenerator } from '@/domain/delivery/application/cryptography/hash-g
 
 export class FakeHasher implements HashGenerator, HashComparer {
   async compare(plain: string, hash: string): Promise<boolean> {
-    return plain === hash;
+    return plain === hash.replace('_hashed', '');
   }
 
   async hash(plain: string): Promise<string> {

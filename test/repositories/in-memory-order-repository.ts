@@ -75,4 +75,19 @@ export class InMemoryOrderRepository implements OrderRepository {
 
     return formattedOrder;
   }
+
+  async findAllDeliveredByDelivererId(
+    id: string,
+    { page }: PaginationParams,
+  ): Promise<Order[]> {
+    const orders = this.items
+      .filter(
+        (item) =>
+          item.currentStatus?.situation === 'delivered' &&
+          item.delivererId.equals(new UniqueEntityId(id)),
+      )
+      .slice(page - 1, page * 20);
+
+    return orders;
+  }
 }

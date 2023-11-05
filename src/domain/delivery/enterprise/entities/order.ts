@@ -25,6 +25,12 @@ export class Order extends AggregateRoot<OrderProps> {
     return this.props.status;
   }
 
+  get currentStatus() {
+    return this.props.status.sort(
+      (a, b) => b.createdAt.getTime() - a.createdAt.getTime(),
+    )[0];
+  }
+
   get delivererId() {
     return this.props.delivererId;
   }

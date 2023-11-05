@@ -9,4 +9,8 @@ export abstract class OrderRepository {
   abstract findAll(params: PaginationParams): Promise<Order[]>;
   abstract findNearby(params: CoordinatesParams): Promise<Order[]>;
   abstract findById(id: string): Promise<Order | null>;
+  abstract findAllDeliveredByDelivererId(
+    id: string,
+    params: PaginationParams,
+  ): Promise<Order[]>;
 }
