@@ -49,11 +49,11 @@ export class InMemoryOrderRepository implements OrderRepository {
   }
 
   async findNearby(params: CoordinatesParams): Promise<Order[]> {
-    const FIFTEEN_KM_IN_METERS = 1 * 1000 * 15;
+    const THIRTY_KM = 30;
     const orders = this.items
       .map((item) => {
         const recipient = this.recipientRepository.items.find((r) =>
-          r.id.equals(item.id),
+          r.id.equals(item.recipientId),
         );
 
         return {
@@ -61,12 +61,13 @@ export class InMemoryOrderRepository implements OrderRepository {
           recipient,
         };
       })
-      .filter(
-        (item) =>
-          item.recipient.coordinate.calculateDistanceInMeters(
-            Coordinate.create(params),
-          ) < FIFTEEN_KM_IN_METERS,
-      );
+      .filter((item) => {
+        const dist = item.recipient.coordinate.calculateDistanceInKM(
+          Coordinate.create(params),
+        );
+
+        return dist <= THIRTY_KM;
+      });
 
     const formattedOrder = orders.map((item) => {
       return this.items.find((i) => i.id.equals(item.id));

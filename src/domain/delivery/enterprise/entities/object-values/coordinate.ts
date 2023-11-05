@@ -19,4 +19,8 @@ export class Coordinate extends ValueObject<CoordinateProps> {
   calculateDistanceInMeters(otherCoodinate: Coordinate) {
     return CoordinateUtil.calculateDistanceInMeters(this, otherCoodinate);
   }
+
+  calculateDistanceInKM(otherCoodinate: Coordinate) {
+    return CoordinateUtil.calculateDistanceInKM(this, otherCoodinate);
+  }
 }

@@ -7,6 +7,7 @@ export interface OrderProps {
   name: string;
   status: Status[];
   delivererId?: UniqueEntityId | null;
+  recipientId?: UniqueEntityId | null;
   createdAt: Date;
   updatedAt?: Date | null;
 }
@@ -30,6 +31,14 @@ export class Order extends AggregateRoot<OrderProps> {
 
   set delivererId(delivererId: UniqueEntityId) {
     this.props.delivererId = delivererId;
+  }
+
+  get recipientId() {
+    return this.props.recipientId;
+  }
+
+  set recipientId(recipientId: UniqueEntityId) {
+    this.props.recipientId = recipientId;
   }
 
   static create(
